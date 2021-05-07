@@ -1,0 +1,32 @@
+# Use postgres/example user/password credentials
+version: '3.1'
+
+networks:
+  my_network:
+    driver: bridge
+
+services:
+  hello_db:
+    image: postgres
+    restart: always
+    environment:
+      POSTGRES_DB: hello_service
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    networks:
+      my_network:
+    container_name: atc_db
+  hello_app:
+    build:
+      context: .
+    environment:
+      POSTGRES_DB: jdbc:postgresql://hello_db:5432/atc_service
+      POSTGRES_USER: postgres
+      PASSWORD: password
+    depends_on:
+      - atc_db
+    restart: always
+    ports:
+      - "8080:8080"
