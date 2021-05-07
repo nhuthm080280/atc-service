@@ -1,0 +1,39 @@
+#
+# Native Quarkus CircleCI configuration file
+#
+orbs:
+  aws-eks: circleci/aws-eks@0.2.3
+  kubernetes: circleci/kubernetes@0.4.0
+version: 2.1
+jobs:
+  build:
+    # Use "machine" instead of e.g. "docker" for better/faster results
+    machine:
+      image: ubuntu-2004:202008-01
+    # Uses a "medium" sized machine - maybe increase this to "large" if you pay for CircleCI
+    resource_class: medium
+    working_directory: ~/repo
+    environment:
+      GRADLE_OPTS: -Xmx6400m
+    steps:
+      # Checkout the source code
+      # ########################
+      - checkout
+      - restore_cache:
+          keys:
+            - v1-dependencies-{{ checksum "build.gradle" }}
+            # fallback to using the latest cache if no exact match is found
+            - v1-dependencies-
+      - run:
+          name: Build and test
+          command: ./gradlew build
+      - store_test_results:
+          path: build/test-result
+      - store_artifacts:
+          path: build/libs
+      - run:
+          name: Build docker image
+          command: docker build -t nhuthuynhdocker/atc-service .
+      - run:
+          name: Push docker image
+          command: echo $DOCKER_PASS | docker login -u $DOCKER_USER --password-stdin && docker image push nhuthuynhdocker/atc-service
