@@ -6,11 +6,11 @@ networks:
     driver: bridge
 
 services:
-  hello_db:
+  atc_db:
     image: postgres
     restart: always
     environment:
-      POSTGRES_DB: hello_service
+      POSTGRES_DB: atc_service
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: password
     ports:
