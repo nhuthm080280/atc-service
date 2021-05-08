@@ -14,3 +14,5 @@ spring: # spring.datasource.driver-class-name=com.mysql.jdbc.Driver
     user: postgres
     schemas: atc_service
     password: password
+  batch:
+    initialize-schema: always

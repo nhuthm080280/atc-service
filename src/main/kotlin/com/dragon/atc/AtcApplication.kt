@@ -2,10 +2,12 @@ package com.dragon.atc
 
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.runApplication
+import org.springframework.scheduling.annotation.EnableScheduling
 
 @SpringBootApplication
+@EnableScheduling
 class AtcApplication
 
 fun main(args: Array<String>) {
-	runApplication<AtcApplication>(*args)
+    runApplication<AtcApplication>(*args)
 }
