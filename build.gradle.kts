@@ -23,10 +23,10 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8")
-    implementation("io.zonky.test:embedded-database-spring-test")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.springframework.batch:spring-batch-test")
+    testImplementation("io.zonky.test:embedded-database-spring-test:1.6.3")
 }
 
 tasks.withType<KotlinCompile> {
